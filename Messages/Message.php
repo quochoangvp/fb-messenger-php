@@ -111,8 +111,14 @@ class Message
      */
     public function getData()
     {
+        $recipient = [];
+        if (is_numeric($this->recipient)) {
+            $recipient['id'] = $this->recipient;
+        } else {
+            $recipient['user_ref'] = $this->recipient;
+        }
         return [
-            'recipient' => $this->user_ref ? ['user_ref' => $this->recipient] : ['id' => $this->recipient],
+            'recipient' => $recipient,
             'message' => [
                 'text' => $this->text
             ],

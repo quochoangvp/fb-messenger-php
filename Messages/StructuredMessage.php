@@ -288,10 +288,10 @@ class StructuredMessage extends Message
 
         if ($this->recipient) {
             $recipient = [];
-            if ((int) $this->recipient == $this->recipient) {
+            if (is_numeric($this->recipient)) {
                 $recipient['id'] = $this->recipient;
             } else {
-                $this->recipient['user_ref'] = $this->recipient;
+                $recipient['user_ref'] = $this->recipient;
             }
             return [
                 'recipient' => $recipient,

@@ -52,10 +52,10 @@ class ImageMessage extends Message
     public function getData()
     {
         $recipient = [];
-        if ((int) $this->recipient == $this->recipient) {
+        if (is_numeric($this->recipient)) {
             $recipient['id'] = $this->recipient;
         } else {
-            $this->recipient['user_ref'] = $this->recipient;
+            $recipient['user_ref'] = $this->recipient;
         }
         $res = [
             'recipient' => $recipient,
