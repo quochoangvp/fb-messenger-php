@@ -51,10 +51,14 @@ class ImageMessage extends Message
      */
     public function getData()
     {
+        $recipient = [];
+        if ((int) $this->recipient == $this->recipient) {
+            $recipient['id'] = $this->recipient;
+        } else {
+            $this->recipient['user_ref'] = $this->recipient;
+        }
         $res = [
-            'recipient' =>  [
-                'id' => $this->recipient
-            ],
+            'recipient' => $recipient,
             'notification_type'=> $this->notification_type,
             'messaging_type' => $this->messaging_type
         ];

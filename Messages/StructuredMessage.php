@@ -287,10 +287,14 @@ class StructuredMessage extends Message
 
 
         if ($this->recipient) {
+            $recipient = [];
+            if ((int) $this->recipient == $this->recipient) {
+                $recipient['id'] = $this->recipient;
+            } else {
+                $this->recipient['user_ref'] = $this->recipient;
+            }
             return [
-                'recipient' =>  [
-                    'id' => $this->recipient
-                ],
+                'recipient' => $recipient,
                 'message' => $result,
                 'tag' => $this->tag,
                 'notification_type'=> $this->notification_type,

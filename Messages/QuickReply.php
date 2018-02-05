@@ -31,10 +31,14 @@ class QuickReply extends Message{
     }
 
     public function getData() {
+        $recipient = [];
+        if ((int) $this->recipient == $this->recipient) {
+            $recipient['id'] = $this->recipient;
+        } else {
+            $this->recipient['user_ref'] = $this->recipient;
+        }
         $result = [
-            'recipient' =>  [
-                'id' => $this->recipient
-            ],
+            'recipient' => $recipient,
             'message' => [
                 'text' => $this->text
             ],

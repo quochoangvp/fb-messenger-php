@@ -48,10 +48,14 @@ class SenderAction
      */
     public function getData()
     {
+        $recipient = [];
+        if ((int) $this->recipient == $this->recipient) {
+            $recipient['id'] = $this->recipient;
+        } else {
+            $this->recipient['user_ref'] = $this->recipient;
+        }
         return [
-            'recipient' =>  [
-                'id' => $this->recipient
-            ],
+            'recipient' => $recipient,
             'sender_action' => $this->action
         ];
     }
