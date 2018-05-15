@@ -33,6 +33,14 @@ class FbBotApp
      */
     protected $token = null;
 
+
+    /**
+     * Contains the last cURL error for the current session if encountered
+     *
+     * @var null|string
+     */
+    protected $curl_error = null;
+
     /**
      * FbBotApp constructor.
      * @param string $token
@@ -143,7 +151,7 @@ class FbBotApp
 
           $responses = [];
 
-          $maxlength = 640;
+          $maxlength = 2000;
 
           $length = strlen(json_encode( $message, JSON_UNESCAPED_SLASHES ) );
 
@@ -151,7 +159,7 @@ class FbBotApp
 
           for ($x=0; $x<$pages; $x++) {
 
-              $responses[] = $this->send(new Message($fb_id,substr( json_encode( $message, JSON_UNESCAPED_SLASHES ), $x*$maxlength, $maxlength ) ) );
+              $responses[] = $this->send( new Message($fb_id,substr( json_encode( $message, JSON_UNESCAPED_SLASHES ), $x*$maxlength, $maxlength), false, "ISSUE_RESOLUTION", "REGULAR", "MESSAGE_TAG" ) );
 
           }
 
@@ -500,8 +508,31 @@ class FbBotApp
 
         curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
         $return = curl_exec($process);
+
+        /**
+         * Check for cURL Errors and, if found display the error code
+         *
+         * @see http://php.net/manual/en/function.curl-error.php
+         */
+        $curl_error = curl_error($process);
+        if ($curl_error) {
+            $this->curl_error = $curl_error;
+        }
+
         curl_close($process);
 
         return json_decode($return, true);
     }
+
+    /**
+     * Get the last cURL error if encountered
+     *
+     * @return null|string
+     */
+    public function getCurlError()
+    {
+        return $this->curl_error;
+    }
+
+
 }
