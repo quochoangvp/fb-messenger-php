@@ -19,6 +19,16 @@ class QuickReplyButton
     const TYPE_LOCATION = "location";
 
     /**
+     * Email quick reply
+     */
+    const TYPE_EMAIL = "user_email";
+
+    /**
+     * Phone quick reply
+     */
+    const TYPE_PHONE = "user_phone_number";
+
+    /**
      * Button type
      *
      * @var null|string
@@ -83,6 +93,9 @@ class QuickReplyButton
                 $result['payload'] = $this->payload;
                 $result['title'] = $this->title;
                 $result['image_url'] = $this->image_url;
+            break;
+            case self::TYPE_PHONE:
+            case self::TYPE_EMAIL:
             break;
         }
 
